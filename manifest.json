@@ -2,7 +2,10 @@
   "name": "Text2JSON",
   "version": "0.1.0",
   "description": "Converting text on the web into JSON",
-  "permissions": ["storage", "tabs"],
+  "permissions": ["contextMenus",
+  "notifications",
+  "tabs",
+  "activeTab"],
   "host_permissions": ["https://*.*/*"],
   "background": {
     "service_worker": "background.js"

@@ -1,12 +1,19 @@
-chrome.tabs.onUpdated.addListener((tabId, tab) => {
-  if (tab.url && tab.url.includes("*/watch")) {
-    const queryParameters = tab.url.split("?")[1];
-    const urlParameters = new URLSearchParams(queryParameters);
+chrome.runtime.onInstalled.addListener(() => {
+  chrome.contextMenus.create({
+      id: 'copyTableAsJSON',
+      title: "Copy table as JSON",
+      contexts: ["selection"]
+  });
+});
 
-    chrome.tabs.sendMessage(tabId, {
-      type: "NEW",
-      videoId: urlParameters.get("v"),
-    });
+chrome.contextMenus.onClicked.addListener((info, tab) => {
+  if ('copyTableAsJSON' === info.menuItemId) {
+
+      chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+          chrome.tabs.sendMessage(tabs[0].id, {
+              message: "messageCopyTableAsJSON"
+          }, function(response) {})
+      });
   }
 });
 
